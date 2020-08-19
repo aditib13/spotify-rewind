@@ -1,21 +1,11 @@
-.InputPlaylistCriteria {
+.top {
+  font-family: sans-serif;
   text-align: center;
 }
 
-.InputPlaylistCriteria-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .InputPlaylistCriteria-logo {
-    animation: InputPlaylistCriteria-logo-spin infinite 20s linear;
-  }
-}
-
-.InputPlaylistCriteria-header {
+.row .top {
   background-color: #282c34;
-  min-height: 100vh;
+  /* min-height: 100vh; */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -24,15 +14,88 @@
   color: white;
 }
 
-.InputPlaylistCriteria-link {
-  color: #61dafb;
+.InputValues {
+  width: 100px;
+  height: 40px;
+  padding: 5px;
+  border-radius: 10px;
+  margin-right: 30px;
+  margin-left: 5px;
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+  box-sizing: border-box; 
 }
 
-@keyframes InputPlaylistCriteria-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.dropdown {
+  border-radius: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding: 5px;
+  color: black;
+}
+
+.Submit {
+  width: 65px;
+  background-color: rgb(243, 243, 243);
+  border-radius: 10px;
+  color: black;
+  padding: 9px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+/* Add a black background color to the top navigation */
+.column .topnav {
+  background-color: #00c24d;
+  overflow: hidden;
+  height: 50px;
+  position: sticky;
+}
+
+/* Style the links inside the navigation bar */
+.column .topnav a.left {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 20px;
+  font-family: sans-serif;
+  height: 60px;
+  margin-top: 12px;
+}
+
+.column .topnav a.right {
+  float: right;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 20px;
+  font-family: sans-serif;
+  height: 60px;
+  margin-top: 12px;
+}
+
+a:hover {
+  cursor: pointer;
+}
+
+.top, .bottom {
+  height: 50vh;
+  width: 100%;
+}
+
+.top {
+  background-image: linear-gradient(#00c24d, #11dfd1);
+  box-shadow: rgb(61, 61, 63);
+  box-shadow: 45px 10px;
+  height: 47vh;
+}
+
+.bottom {
+  background-color: rgb(49, 49, 49);
 }

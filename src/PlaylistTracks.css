@@ -1,0 +1,96 @@
+
+  .PlaylistTracks {
+    font-family: sans-serif;
+    text-align: center;
+  }
+  
+  .PlaylistTracks-header {
+    /* background-color: #282c34; */
+    background-image: linear-gradient(#00c24d, #11dfd1);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
+  }
+  
+  .Tracks {
+      margin-top: -100px;
+  }
+  
+  .Tracks div {
+    width: 65%;
+    height: 550px;
+    overflow-y: scroll;
+    margin-right: auto;
+    margin-left: auto;
+    border-style: solid;
+  }
+  
+  li {
+    width: 600px;
+    padding: 10px;
+    border-bottom: 1px solid #666666;
+    text-align: left;
+    padding-left: 10px;
+    background-color: rgb(221, 220, 220);
+    color: black;
+  }
+
+  li:hover {
+      background-color: rgb(0, 192, 102);
+  }
+  
+  
+  /* Add a black background color to the top navigation */
+  .topnav {
+    /* background-color: #22252b; */
+    background-color: #00c24d;
+    overflow: hidden;
+    height: 75px;
+  }
+  
+  /* Style the links inside the navigation bar */
+  .topnav a.left {
+    float: left;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 20px;
+    font-family: sans-serif;
+    height: 60px;
+    margin-top: 12px;
+  }
+  
+  .topnav a.right {
+    float: right;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 20px;
+    font-family: sans-serif;
+    height: 60px;
+    margin-top: 12px;
+  }
+  
+  a:hover {
+    cursor: pointer;
+  }
+  
+  .Tracks input {
+    width: 120px;
+    margin-top: 12px;
+    background-color: rgb(243, 243, 243);
+    border-radius: 10px;
+    color: black;
+    padding: 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    cursor: pointer;
+  }

@@ -1,0 +1,69 @@
+  .top {
+    font-family: sans-serif;
+    text-align: center;
+  }
+  
+  .row .top {
+    background-color: #282c34;
+    /* min-height: 100vh; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
+  }
+  
+  /* Add a black background color to the top navigation */
+  .column .topnav {
+    background-color: #00c24d;
+    overflow: hidden;
+    height: 50px;
+    position: sticky;
+  }
+  
+  /* Style the links inside the navigation bar */
+  .column .topnav a.left {
+    float: left;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 20px;
+    font-family: sans-serif;
+    height: 60px;
+    margin-top: 12px;
+  }
+  
+  .column .topnav a.right {
+    float: right;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 20px;
+    font-family: sans-serif;
+    height: 60px;
+    margin-top: 12px;
+  }
+  
+  a:hover {
+    cursor: pointer;
+  }
+  
+  .top, .bottom {
+    height: 50vh;
+    width: 100%;
+  }
+  
+  .top {
+    background-image: linear-gradient(#00c24d, #11dfd1);
+    box-shadow: rgb(61, 61, 63);
+    box-shadow: 45px 10px;
+    height: 47vh;
+  }
+  
+  .bottom {
+    background-color: rgb(49, 49, 49);
+  }
+  
