@@ -2,6 +2,7 @@ import base64
 import time
 from flask import Flask, redirect, request
 from flask_cors import CORS, cross_origin
+import json
 import logging
 import requests
 import pprint
@@ -44,22 +45,27 @@ def tracks(year, num, genres):
     print('Tracks function entered. args: {}'.format(locals()))
     
     if ALL_GENRES in genres:
-        return {'tracks': search(year, int(num), ALL_GENRES, MAX_SONGS)}
+        tracks, uris = search(year, int(num), ALL_GENRES, MAX_SONGS)
+        return {'tracks': tracks, 'uris': uris}
     else:
-        return {'tracks': allocate_genre_amounts(year, int(num), genres)}
+        tracks, uris = allocate_genre_amounts(year, int(num), genres)
+        return {'tracks': tracks, 'uris': uris}
     
 def get_all_songs_per_genre(year, num, genres):
     num_genres = genres.count(",") + 1
     max_tracks_per_genre = math.ceil(MAX_SONGS/num_genres)
     popular_tracks_by_genre = {}
+    uris = []
     
     for genre in genres.split(','):
-        popular_tracks_by_genre[genre] = search(year, num, genre, max_tracks_per_genre)
+        popular_tracks_by_genre[genre], uris_per_genre = search(year, num, genre, max_tracks_per_genre)
+        uris.extend(uris_per_genre)
         if len(popular_tracks_by_genre[genre]) == 0:
             del popular_tracks_by_genre[genre]
 
     # print("popular_tracks_by_genre:", popular_tracks_by_genre)
-    return popular_tracks_by_genre
+    print("get all songs uris", uris)
+    return popular_tracks_by_genre, uris
 
 def search(year, num, genre, max_tracks_per_genre):
     query = 'year:{} genre:{}'.format(year, genre)
@@ -95,8 +101,9 @@ def search(year, num, genre, max_tracks_per_genre):
         response = requests.get(search_query, headers=headers, params=params).json()
         tracks.extend(response['tracks']['items'])
         next_url = response['tracks']['next']
-    sorted_tracks = sort_by_popularity(int(num), tracks, year)
-    return sorted_tracks
+    sorted_tracks, uris = sort_by_popularity(int(num), tracks, year)
+    print("search uris:", uris)
+    return sorted_tracks, uris
 
 # takes a list of tracks and sorts them by popularity
 def sort_by_popularity(number, tracks, year):
@@ -117,15 +124,12 @@ def sort_by_popularity(number, tracks, year):
     for i in range(min(number, len(popularity_list))):
         top_n_tracks_uris.append(popularity_list[i][URI])
         top_n_tracks_names.append([popularity_list[i][NAME], popularity_list[i][POPULARITY], popularity_list[i][URI]])
-    # print(top_n_tracks_names)
-
-    # add_to_playlist(year, number, top_n_tracks_uris)
-
-    return top_n_tracks_names
+    print('sort uris:', top_n_tracks_uris)
+    return top_n_tracks_names, top_n_tracks_uris
 
 
 def allocate_genre_amounts(year, num, genres):
-    popular_tracks_by_genre = get_all_songs_per_genre(year, num, genres)
+    popular_tracks_by_genre, uris = get_all_songs_per_genre(year, num, genres)
     num_genres = len(popular_tracks_by_genre)
     print("len:", num_genres)
     max_tracks_per_genre = min((num//num_genres), (MAX_SONGS//num_genres))
@@ -136,6 +140,7 @@ def allocate_genre_amounts(year, num, genres):
     
     for genre in list(popular_tracks_by_genre):
         # get rid of duplicates
+        #TODO: handle uri here
         unique_songs_list = []
         for track in popular_tracks_by_genre[genre]:
             if track not in final_list_of_popular_tracks:
@@ -165,22 +170,27 @@ def allocate_genre_amounts(year, num, genres):
                 del popular_tracks_by_genre[genre]
 
     print("final list:", final_list_of_popular_tracks)
-    return final_list_of_popular_tracks
+    return final_list_of_popular_tracks, uris
 
 
 #---------------------------------------------SPOTIFY PLAYLIST CREATION--------------------------------------------
 
 
-@app.route('/create-playlist/<year>/<num>/<access_token>')
-def create_final_playlist(year, num, uris, access_token):
-    playlist_id = create_playlist_on_spotify(year, num)
+@app.route('/create-playlist/<year>/<num>/<access_token>/<uris>')
+def create_final_playlist(year, num, access_token, uris):
+    # TODO: can only add 100 at a time
+    playlist_id = create_playlist_on_spotify(year, num, access_token)
     print("playlist id:", playlist_id)
     add_query = "https://api.spotify.com/v1/playlists/{}/tracks".format(playlist_id)
+
+    uris = uris.split(",")
+
     request_data = json.dumps(uris)
+    print("request data:", request_data)
+    
     headers = {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
         'Authorization': 'Bearer {}'.format(access_token),
+        'Content-Type': 'application/json'
     }
 
     response = requests.post(url=add_query, data=request_data, headers=headers).json()
@@ -200,12 +210,15 @@ def refresh_token(code):
     return response['access_token'], response['refresh_token']
 
 def get_user_id(access_token):
+    print("1 in get user id function")
     user_query = 'https://api.spotify.com/v1/me'
     headers = {
-        'Authorization': access_token
+        'Authorization': 'Bearer {}'.format(access_token)
     }
-
-    response = requests.get(headers=headers)
+    print("2 in get user id function")
+    response = requests.get(url=user_query, headers=headers).json()
+    print("3 in get user id function")
+    print("user response:", response)
     user_id = response['id']
     print("user response:", response)
     return user_id
@@ -229,24 +242,6 @@ def create_playlist_on_spotify(year, num, access_token):
     return response["id"]
 
 #-------------------------------------------------------LOGIN----------------------------------------------------
-
-# @app.route('/login')
-# @cross_origin(origin='localhost',headers=['Content- Type','Authorization'])
-# def login():
-#     print("Entering login")
-#     auth_query = 'https://accounts.spotify.com/authorize'
-#     auth_params = {
-#         'client_id': SPOTIFY_CLIENT_ID,
-#         'response_type': 'code',
-#         'redirect_uri': "http://localhost:3000/logged-in",
-#         'scope': 'playlist-modify-public'
-#     }
-
-#     url_args = "&".join(["{}={}".format(key, quote(val)) for key, val in auth_params.items()])
-#     auth_url = "{}?{}".format(auth_query, url_args)
-#     print("auth_url: ", auth_url)
-#     print("redirect", redirect(auth_url))
-#     return redirect(auth_url, code=302)
     
 @app.route('/logged-in/<code>')
 def get_access_token(code):
@@ -267,7 +262,7 @@ def get_access_token(code):
         }
 
         response = requests.post(url=token_query, data=request_body, headers=headers, auth=(SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET)).json()
-        print(response)
+        print("response:", response)
         access_token = response['access_token']
         refresh_token = response['refresh_token']
         print("RESPONSE:", response)
