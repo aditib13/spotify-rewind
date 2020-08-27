@@ -21,12 +21,13 @@
   }
   
   .Tracks div {
-    width: 65%;
+    width: 75%;
     height: 550px;
     overflow-y: scroll;
     margin-right: auto;
     margin-left: auto;
     border-style: solid;
+    border-radius: 20px;
   }
   
   li {

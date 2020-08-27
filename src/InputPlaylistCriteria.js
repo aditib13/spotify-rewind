@@ -28,7 +28,7 @@ function InputPlaylistCriteria(props) {
     fetch(`/logged-in/${code}`).then(res => res.json()).then(data => {
       console.log("2 isLoggedIn:", isLoggedIn);
       console.log("3 Logged in entered", data);
-      cookies.set('access_token', data.access_token, { path: '/' });
+      cookies.set('access_token', data.access_token, { path: '/', sameSite: 'none', secure: true });
       let isLoggedInCopy = (typeof cookies.get('access_token') !== 'undefined');
 
       console.log("4 checking if cookie is set isLoggedInCopy", isLoggedInCopy);

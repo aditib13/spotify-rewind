@@ -68,7 +68,7 @@ function PlaylistTracks(props) {
   return (
     <div className="PlaylistTracks">
     <div className="topnav">
-        <a className="left" href="/">Spotify Rewind</a>
+        <a className="left" href="/logged-in">Spotify Rewind</a>
     </div>
     <header className="PlaylistTracks-header">
         <div className='Tracks'>
