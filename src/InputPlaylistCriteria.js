@@ -67,6 +67,7 @@ function InputPlaylistCriteria(props) {
       <div className="row">
         <div className="topnav">
           <a className="left" href="/">Spotify Rewind</a>
+          <a className="right">Logged In</a>
         </div>
         <div className="top">
         <p>Please enter a year and the number of tracks you want in your playlist.</p>
