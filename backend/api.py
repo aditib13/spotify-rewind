@@ -56,17 +56,20 @@ def get_all_songs_per_genre(year, num, genres):
     num_genres = genres.count(",") + 1
     max_tracks_per_genre = math.ceil(MAX_SONGS/num_genres)
     popular_tracks_by_genre = {}
+    uris_by_genre = {}
     uris = []
     
     for genre in genres.split(','):
-        popular_tracks_by_genre[genre], uris_per_genre = search(year, num, genre, max_tracks_per_genre)
-        uris.extend(uris_per_genre)
+        popular_tracks_by_genre[genre], uris_by_genre[genre] = search(year, num, genre, max_tracks_per_genre)
+        # uris.extend(uris_per_genre)
+
         if len(popular_tracks_by_genre[genre]) == 0:
             del popular_tracks_by_genre[genre]
+            del uris_by_genre[genre]
 
     # print("popular_tracks_by_genre:", popular_tracks_by_genre)
     print("get all songs uris", uris)
-    return popular_tracks_by_genre, uris
+    return popular_tracks_by_genre, uris_by_genre
 
 def search(year, num, genre, max_tracks_per_genre):
     query = 'year:{} genre:{}'.format(year, genre)
@@ -117,11 +120,6 @@ def sort_by_popularity(number, tracks, year):
         popularity_list.append([track['popularity'], track['uri'], track['name'], idx])
     popularity_list.sort(key=lambda x: x[POPULARITY], reverse=True)
 
-    pops = [p[POPULARITY] for p in popularity_list[:200]]
-    # print("popularities:", pops)
-    indexes = [p[3] for p in popularity_list[:200]]
-    # print("idx:", sorted(indexes))
-
     for i in range(min(number, len(popularity_list))):
         top_n_tracks_uris.append(popularity_list[i][URI])
         top_n_tracks_names.append([popularity_list[i][NAME], popularity_list[i][POPULARITY], popularity_list[i][URI]])
@@ -130,34 +128,44 @@ def sort_by_popularity(number, tracks, year):
 
 
 def allocate_genre_amounts(year, num, genres):
-    popular_tracks_by_genre, uris = get_all_songs_per_genre(year, num, genres)
+    popular_tracks_by_genre, uris_by_genre = get_all_songs_per_genre(year, num, genres)
     num_genres = len(popular_tracks_by_genre)
     print("len:", num_genres)
     max_tracks_per_genre = min((num//num_genres), (MAX_SONGS//num_genres))
     print("max tracks per genre:", max_tracks_per_genre)
     final_list_of_popular_tracks = []
+    final_list_of_popular_uris = []
     
     num_tracks_remaining = 0
-    
+
+    # Goes through each genre, collects [num songs/num genre] unique songs and their uris
     for genre in list(popular_tracks_by_genre):
-        # get rid of duplicates
-        #TODO: handle uri here
-        unique_songs_list = []
-        for track in popular_tracks_by_genre[genre]:
+        unique_tracks_list = []
+        unique_tracks_uris = []
+
+        for idx, track in enumerate(popular_tracks_by_genre[genre]):
             if track not in final_list_of_popular_tracks:
-                unique_songs_list.append(track)
-        popular_tracks_by_genre[genre] = unique_songs_list
+                unique_tracks_list.append(track)
+                unique_tracks_uris.append(uris_by_genre[genre][idx])
+
+        popular_tracks_by_genre[genre] = unique_tracks_list
+        uris_by_genre[genre] = unique_tracks_uris
 
         num_tracks = min(max_tracks_per_genre, len(popular_tracks_by_genre[genre]))
         print("num tracks:", num_tracks)
         num_tracks_remaining += (max_tracks_per_genre - num_tracks)
         print("num tracks remaining:", num_tracks_remaining)
         final_list_of_popular_tracks.extend(popular_tracks_by_genre[genre][:num_tracks])
+        final_list_of_popular_uris.extend(uris_by_genre[genre][:num_tracks])
+        
         del popular_tracks_by_genre[genre][:num_tracks]
+        del uris_by_genre[genre][:num_tracks]
 
         if num_tracks <= max_tracks_per_genre:
             del popular_tracks_by_genre[genre]
-    
+            del uris_by_genre[genre]
+
+    # Goes through each genre again, completes the leftover amount
     while num_tracks_remaining > 0:
         additional_tracks_per_genre = num_tracks_remaining//len(popular_tracks_by_genre[genre])
 
@@ -165,13 +173,16 @@ def allocate_genre_amounts(year, num, genres):
             num_tracks = min(additional_tracks_per_genre, len(popular_tracks_by_genre[genre]))
             print("num tracks:", num_tracks)
             final_list_of_popular_tracks.extend(popular_tracks_by_genre[genre][:num_tracks])
+            final_list_of_popular_uris.extend(uris_by_genre[genre][:num_tracks])
+
             num_tracks_remaining -= num_tracks
 
             if num_tracks <= additional_tracks_per_genre:
                 del popular_tracks_by_genre[genre]
+                del uris_by_genre[genre]
 
     print("final list:", final_list_of_popular_tracks)
-    return final_list_of_popular_tracks, uris
+    return final_list_of_popular_tracks, final_list_of_popular_uris
 
 
 #---------------------------------------------SPOTIFY PLAYLIST CREATION--------------------------------------------
