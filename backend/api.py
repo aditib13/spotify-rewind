@@ -1,5 +1,6 @@
 import base64
 import time
+from decouple import config
 from flask import Flask, redirect, request
 from flask_cors import CORS, cross_origin
 import json
@@ -14,8 +15,8 @@ app.run(debug=True)
 CORS(app)
 
 # spotify search auth info
-SPOTIFY_CLIENT_ID = 'd831937ac99d4ebba9b65e864fccd8c1'
-SPOTIFY_CLIENT_SECRET = '72d5216654ef416e90a47c0d82b45360'
+SPOTIFY_CLIENT_ID = config('SPOTIFY_CLIENT_ID')
+SPOTIFY_CLIENT_SECRET = config('SPOTIFY_CLIENT_SECRET')
 
 # Searching for tracks
 ALL_GENRES = 'all genres'
