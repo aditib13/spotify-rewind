@@ -32,32 +32,6 @@ function PlaylistTracks(props) {
       return track[0];
     })
 
-    // returns track url TODO
-    var trackUrl = tracks.map(function (track, i) {
-      return track[2];
-    })
-
-    // function createPlaylist() {
-    //   console.log("createPlaylist entered");
-    //   fetch(`/create-playlist/${year}/${num}/${accessToken}`).then(data => {
-    //       console.log("Playlist Created!");
-    //   });
-    // }
-
-    // function markUp() {
-    //   return (
-    //     <div className="TracksHTML">
-    //       <p> Top Tracks of ${year} </p>
-    //       <div className="box">
-    //         <li> + ${trackList}.join(</li><li>) + </li>
-    //       </div>
-    //       <input type="button" onClick={createPlaylist} value="Create Playlist" />
-    //     </div>
-    //   );
-    // }
-
-    // markUp();
-
     document.getElementById('trackList').innerHTML =
       `<p> Top Tracks of ${year} </p> 
         <div id="box"> 

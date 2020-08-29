@@ -17,7 +17,7 @@ function App() {
   return <BrowserRouter>
   <Switch>
     {/* <Route exact path="/" component={Input} /> */}
-    <Route exact path="/" component={Login} />
+    <Route exact path="/" component={InputPlaylistCriteria} />
     <Route exact path="/logged-in" component={InputPlaylistCriteria} />
     <Route exact path="/view-playlist-tracks/:query" component={PlaylistTracks} />
   </Switch>
