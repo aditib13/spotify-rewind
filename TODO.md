@@ -1,12 +1,19 @@
 # TODO
 - make client id/secret environment variables DONE
+- make client id secret reactjs
 - multiple years
 - fix uri list DONE
 - error when empty fields DONE
 - error when more genres than num songs DONE
+-error: only integer in year num
 - style
 - refresh token
 - change url when on heroku (localhost on here and spotify)
+- urls shouldn't be long
+- add confirmation page: include link
+- fix design
+- good website designs with gradients
+
 
 # how to add package to requirements.txt
 - source venv/bin/activate

@@ -39,15 +39,19 @@
 }
 
 .Submit {
-  width: 65px;
-  background-color: rgb(243, 243, 243);
-  border-radius: 10px;
-  color: black;
-  padding: 9px;
-  text-align: center;
+  height: 40px;
+  line-height: 36px;
+  border: 2px solid white;
+  background-color: transparent;
+  color: white;
   text-decoration: none;
-  display: inline-block;
-  font-size: 13px;
+  border-radius: 20px;
+  padding: 0 20px;
+  font-family: Helvetica Neue,Helvetica,sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  margin-top: 10px;
+  margin-right: 10px;
   cursor: pointer;
 }
 
@@ -113,3 +117,20 @@ p {
   margin-inline-end: 0px;
 }
 
+.column .topnav button {
+  float: right;
+  height: 40px;
+  line-height: 36px;
+  border: 2px solid white;
+  background-color: #00c24d;
+  color: white;
+  text-decoration: none;
+  border-radius: 20px;
+  padding: 0 20px;
+  font-family: Helvetica Neue,Helvetica,sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  margin-top: 10px;
+  margin-right: 10px;
+  cursor: pointer;
+}
