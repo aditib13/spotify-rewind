@@ -14,7 +14,7 @@ app = Flask(__name__)
 app.run(debug=True)
 CORS(app)
 
-# spotify search auth info
+# Spotify search auth info
 SPOTIFY_CLIENT_ID = config('SPOTIFY_CLIENT_ID')
 SPOTIFY_CLIENT_SECRET = config('SPOTIFY_CLIENT_SECRET')
 
@@ -30,7 +30,7 @@ NAME = 2
 MAX_SONGS = 200
 MAX_GENRES = 5
 
-# spotify authentication
+# Spotify authentication
 def spotify_authenticate(SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET):
     data = {'grant_type': 'client_credentials'}
     url = 'https://accounts.spotify.com/api/token'
@@ -61,13 +61,11 @@ def get_all_songs_per_genre(year, num, genres):
     
     for genre in genres.split(','):
         popular_tracks_by_genre[genre], uris_by_genre[genre] = search(year, num, genre, max_tracks_per_genre)
-        # uris.extend(uris_per_genre)
 
         if len(popular_tracks_by_genre[genre]) == 0:
             del popular_tracks_by_genre[genre]
             del uris_by_genre[genre]
 
-    # print("popular_tracks_by_genre:", popular_tracks_by_genre)
     print("get all songs uris", uris)
     return popular_tracks_by_genre, uris_by_genre
 
@@ -109,13 +107,12 @@ def search(year, num, genre, max_tracks_per_genre):
     print("search uris:", uris)
     return sorted_tracks, uris
 
-# takes a list of tracks and sorts them by popularity
+# Takes a list of tracks and sorts them by popularity
 def sort_by_popularity(number, tracks, year):
     top_n_tracks_names = []
     top_n_tracks_uris = []
     popularity_list = []
 
-    # todo: do something to make it unique by name of track
     for idx, track in enumerate(tracks):
         popularity_list.append([track['popularity'], track['uri'], track['name'], idx])
     popularity_list.sort(key=lambda x: x[POPULARITY], reverse=True)

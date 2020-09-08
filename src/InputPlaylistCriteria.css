@@ -1,21 +1,16 @@
-.top {
-  font-family: sans-serif;
-  text-align: center;
-}
-
-.bottom {
-  font-family: sans-serif;
-  text-align: center;
-}
-
 .row .top {
-  font-size: calc(10px + 2vmin);
+  font-size: calc(10px + 1.5vmin);
   color: white;
+  font-family: sans-serif;
+  text-align: center;
+  background-image: linear-gradient(#00c24d, #11dfd1);
+  box-shadow: rgb(61, 61, 63);
+  box-shadow: 45px 10px;
+  height: 90vh;
 }
 
-.row .bottom {
-  font-size: calc(10px + 2vmin);
-  color: white;
+.row .top p {
+  margin-top: -240px;
 }
 
 .InputValues {
@@ -38,6 +33,13 @@
   color: black;
 }
 
+.top label input {
+  border: 1px solid white;
+  margin-top: 15px;
+  margin-bottom: 5px;
+  height: 40px;
+}
+
 .Submit {
   height: 40px;
   line-height: 36px;
@@ -55,11 +57,10 @@
   cursor: pointer;
 }
 
-/* Add a black background color to the top navigation */
 .column .topnav {
   background-color: #00c24d;
   overflow: hidden;
-  height: 50px;
+  height: 10vh;
   position: sticky;
 }
 
@@ -72,7 +73,7 @@
   text-decoration: none;
   font-size: 20px;
   font-family: sans-serif;
-  height: 60px;
+  height: 10vh;
   margin-top: 12px;
 }
 
@@ -83,30 +84,13 @@
   padding: 14px 16px;
   text-decoration: none;
   font-size: 20px;
-  font-family: sans-serif;
-  height: 60px;
+  font-family: 'Gill Sans', sans-serif;
+  height: 10vh;
   margin-top: 12px;
 }
 
 a:hover {
   cursor: pointer;
-}
-
-.top, .bottom {
-  height: 50vh;
-  width: 100%;
-}
-
-.top {
-  background-image: linear-gradient(#00c24d, #11dfd1);
-  box-shadow: rgb(61, 61, 63);
-  box-shadow: 45px 10px;
-  height: 47vh;
-}
-
-.bottom {
-  background-color: rgb(49, 49, 49);
-  
 }
 
 p {

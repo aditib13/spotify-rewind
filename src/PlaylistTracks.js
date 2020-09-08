@@ -47,7 +47,7 @@ function PlaylistTracks(props) {
     <header className="PlaylistTracks-header">
         <div className='Tracks'>
         <ul id="trackList"></ul>
-        <input type="button" onClick={createPlaylist} value="Create Playlist" />
+        <input type="button" className='submit' onClick={createPlaylist} value="Create Playlist" />
         </div>
     </header>
     </div>

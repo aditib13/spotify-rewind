@@ -1,11 +1,11 @@
 # TODO
-- make client id/secret environment variables DONE
++ make client id/secret environment variables DONE
 - make client id secret reactjs
 - multiple years
-- fix uri list DONE
-- error when empty fields DONE
-- error when more genres than num songs DONE
--error: only integer in year num
++ fix uri list DONE
++ error when empty fields DONE
++ error when more genres than num songs DONE
+- error: only integer in year num
 - style
 - refresh token
 - change url when on heroku (localhost on here and spotify)

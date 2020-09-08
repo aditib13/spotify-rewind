@@ -114,33 +114,36 @@ function InputPlaylistCriteria(props) {
         </div>
         <div className="top">
           <p>Please enter a year and the number of tracks you want in your playlist.</p>
-        <form>
-          <label>
-            Year: 
-            <input type="text" name="name" className="InputValues" onChange={e => setYear(e.target.value)}/>
-          </label>
-          <label>
-            #: 
-            <input type="text" name="name" className="InputValues" onChange={e => setNum(e.target.value)}/>
-          </label>
-          <Select
-            isMulti
-            isClearable
-            closeMenuOnSelect={false}
-            options={genreList}
-            className="dropdown"
-            onChange={handleGenre}
-            placeholder='select genre(s)...'
+          <form>
+            <label>
+              Year: 
+              <input type="text" name="name" className="InputValues" onChange={e => setYear(e.target.value)}/>
+            </label>
+            <label>
+              #: 
+              <input type="text" name="name" className="InputValues" onChange={e => setNum(e.target.value)}/>
+            </label>
+            <Select
+              isMulti
+              isClearable
+              closeMenuOnSelect={false}
+              options={genreList}
+              className="dropdown"
+              onChange={handleGenre}
+              placeholder='select genre(s)...'
+            />
+            <input type="button" onClick={results} value="Submit" className="Submit" />
+          </form>
+          <hr
+            style={{
+              borderColor: "white",
+              width: 1000,
+              marginTop: 60
+            }}
           />
-          <input type="button" onClick={results} value="Submit" className="Submit" />
-        </form>
         </div>
       </div>
-      <div className="row">
-        <div className="bottom">
-          <p>Please log in to Spotify at the top to connect to your account.</p>
-        </div>
-      </div>
+      
     </div>
   );
 }
