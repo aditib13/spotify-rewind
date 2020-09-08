@@ -23,6 +23,7 @@ add to requirements somehow
 - yarn add react-select
 - npm install react-router-dom
 - npm install universal-cookie
+- npm install react-promise-tracker --save
 
 
 
