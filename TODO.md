@@ -31,3 +31,11 @@ add to requirements somehow
 - setAccessToken re-renders the page and doesn't execute the code after it
 - global variables outside a function don't seem to get reset if used inside functions
 
+
+"scripts": {
+    "start": "react-scripts start",
+    "start-api": "cd backend && venv/bin/flask run",
+    "build": "react-scripts build",
+    "test": "react-scripts test"š
+    "eject": "react-scripts eject"
+  },

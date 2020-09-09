@@ -60,27 +60,46 @@ function InputPlaylistCriteria(props) {
     }
   }
 
+  function errorChecking(year, num, genres) {
+    const currYear = new Date().getFullYear()
+    // check for correct inputs
+    if (genres.length <= 0 || num == '' || year == '') {
+      alert(`Please fill in all fields.`);
+      return -1;
+    }
+    if (year < 1800 || year > currYear) {
+      alert(`Please enter a year between 1800 and ${currYear}.`);
+      return -1;
+    }
+    if (num < 0 || num > 200) {
+      alert(`Please pick a number between 0 and 200.`);
+      return -1;
+    }
+    if (genres.length > num) {
+      alert(`Please pick more genres than amount of songs.`);
+      return -1;
+    }
+    if (isNaN(num) && isNaN(year)) {
+      alert(`Please pick a valid year and number.`);
+      return -1;
+    }
+    if (isNaN(year)) {
+      alert(`Please pick a valid year.`);
+      return -1;
+    }
+    if (isNaN(num)) {
+      alert(`Please pick a valid number.`);
+      return -1;
+    }
+  }
+
   const history = useHistory();
   const [year, setYear] = useState('');
   const [num, setNum] = useState('');
 
   function results(accessToken) {
-    const currYear = new Date().getFullYear()
     // check for correct inputs
-    if (genres.length < 0 || num == '' || year == '') {
-      alert(`Please fill in all fields.`);
-      return;
-    }
-    if (year < 1800 || year > currYear) {
-      alert(`Please enter a year between 1800 and ${currYear}.`);
-      return;
-    }
-    if (num < 0 || num > 200) {
-      alert(`Please pick a number between 0 and 200.`);
-      return;
-    }
-    if (genres.length > num) {
-      alert(`Please pick more genres than amount of songs.`);
+    if (errorChecking(year, num, genres) == -1) {
       return;
     }
 
