@@ -278,6 +278,6 @@ def refresh_token(token):
 
     response = requests.post(url=token_query, data=request_body, headers=headers, auth=(SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET)).json()
     print("refresh response:", response)
-    return {"access_token": response['access_token'], "refresh_token": response['refresh_token']}
+    return {"access_token": response['access_token']}
 
 

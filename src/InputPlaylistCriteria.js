@@ -8,14 +8,11 @@ import Cookies from 'universal-cookie';
 import './InputPlaylistCriteria.css';
 
 function InputPlaylistCriteria(props) {
-  console.log("time:", Math.floor(Date.now() / 1000));
   const cookies = new Cookies();
   let isLoggedIn = (typeof cookies.get('access_token') !== 'undefined');
-  console.log("isLoggedIn:", isLoggedIn);
   let loginMessage = '';
 
   if (isLoggedIn) {
-    cookies.set('timestamp', 1599684672);
     console.log("timestamp:", cookies.get('timestamp'));
     console.log("time elapsed:", Math.floor(Date.now() / 1000) - cookies.get('timestamp'));
     console.log("refresh token:", cookies.get('refresh_token'));
@@ -24,6 +21,7 @@ function InputPlaylistCriteria(props) {
     if (Math.floor(Date.now() / 1000 - timestamp) >= 3600 || timestamp === 'undefined') {
       fetch(`/refresh-token/${cookies.get('refresh_token')}`).then(res => res.json()).then(data => {
         cookies.set('access_token', data.access_token, { path: '/' });
+        cookies.set('timestamp', Math.floor(Date.now() / 1000), { path: '/' });
       });
     }
     loginMessage = 'Logged In';
@@ -31,12 +29,9 @@ function InputPlaylistCriteria(props) {
   else {
     loginMessage = 'Login to Spotify';
   }
-  console.log("login mess:", loginMessage);
   
   const query = queryString.parse(props.location.search);
   const code = query['code'];
-  console.log("0 (global): code: ", code);
-  console.log("1. (global) isLoggedIn", isLoggedIn);
 
   if (typeof code !== 'undefined' && !isLoggedIn) {
     LogIn();
@@ -44,16 +39,10 @@ function InputPlaylistCriteria(props) {
 
   function LogIn() {
     fetch(`/logged-in/${code}`).then(res => res.json()).then(data => {
-      console.log("2 isLoggedIn:", isLoggedIn);
-      console.log("3 Logged in entered", data);
       cookies.set('code', code, { path: '/' });
       cookies.set('access_token', data.access_token, { path: '/' });
       cookies.set('refresh_token', data.refresh_token, { path: '/' });
       cookies.set('timestamp', Math.floor(Date.now() / 1000), { path: '/' });
-      let isLoggedInCopy = (typeof cookies.get('access_token') !== 'undefined');
-
-      console.log("4 checking if cookie is set isLoggedInCopy", isLoggedInCopy);
-      console.log("5 cookies access_token value: ", cookies.get('access_token'));
     });
   }
   
