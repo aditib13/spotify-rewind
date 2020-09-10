@@ -39,8 +39,10 @@ ul {
 }
 
 li {
-  background-image: linear-gradient(to bottom right, #f096d5, #e241b2);
-  /* background-color: teal; */
+    /* background-image: linear-gradient(to bottom right, #f096d5, #e241b2); */
+  /* background-image: linear-gradient(to bottom right, #91bff5, #6d0d48); */
+  /* background-image: linear-gradient(to bottom right, #918f90, #555555); */
+  background-image: linear-gradient(to bottom right, #cea4eb, #9714ee);
   line-height: 36px;
   border: 2px solid white;
   color: white;

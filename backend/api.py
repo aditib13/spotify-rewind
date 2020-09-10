@@ -206,19 +206,6 @@ def create_final_playlist(year, num, access_token, uris):
     print("create final playlist response:", response)
     return response
 
-@app.route('/refresh-token/<code>')
-def refresh_token(code):
-    token_query = 'https://example.com/v1/refresh'
-    request_body = {
-        'code': code
-    }
-    headers = {
-        'Content-Type': 'application/x-www-form-urlencoded'
-    }
-
-    response = requests.post(url=token_query, data=request_body, headers=headers).json()
-    return {'access_token': response['access_token']}
-
 def get_user_id(access_token):
     print("1 in get user id function")
     user_query = 'https://api.spotify.com/v1/me'
@@ -256,11 +243,7 @@ def create_playlist_on_spotify(year, num, access_token):
 @app.route('/logged-in/<code>')
 def get_access_token(code):
     try:
-        print("logged in entered")
-        print('code:', code)
-
         encoded_data = base64.b64encode(bytes("{}:{}".format(SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET), "ISO-8859-1")).decode("ascii")
-        print("encoded data:", encoded_data)
         token_query = 'https://accounts.spotify.com/api/token'
         request_body = {
             'grant_type': "authorization_code",
@@ -272,14 +255,29 @@ def get_access_token(code):
         }
 
         response = requests.post(url=token_query, data=request_body, headers=headers, auth=(SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET)).json()
-        print("response:", response)
         access_token = response['access_token']
         refresh_token = response['refresh_token']
-        print("RESPONSE:", response)
-        print("access_token:", response['access_token'])
-        return {"access_token": response['access_token']}
+        return {"access_token": response['access_token'], "refresh_token": response['refresh_token']}
     except Exception as e:
         print('Unexpected exception found for get_access_token: {}'.format(e))
         return {}
+
+@app.route('/refresh-token/<token>')
+def refresh_token(token):
+    print("code:", token)
+    token_query = 'https://accounts.spotify.com/api/token'
+    encoded_data = base64.b64encode(bytes("{}:{}".format(SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET), "ISO-8859-1")).decode("ascii")
+    request_body = {
+        'grant_type': 'refresh_token',
+        'refresh_token': token
+    }
+    headers = {
+        'Authorization': "Basic {}".format(encoded_data),
+        'Content-Type': 'application/x-www-form-urlencoded'
+    }
+
+    response = requests.post(url=token_query, data=request_body, headers=headers, auth=(SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET)).json()
+    print("refresh response:", response)
+    return {"access_token": response['access_token'], "refresh_token": response['refresh_token']}
 
 

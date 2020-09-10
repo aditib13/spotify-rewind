@@ -18,42 +18,42 @@ function InputPlaylistCriteria(props) {
     cookies.set('timestamp', 1599684672);
     console.log("timestamp:", cookies.get('timestamp'));
     console.log("time elapsed:", Math.floor(Date.now() / 1000) - cookies.get('timestamp'));
-
-    // if (Math.floor(Date.now() / 1000 - cookies.get('timestamp')) >= 3600) {
-    //   fetch(`/refresh-token/${cookies.get('code')}`).then(res => res.json()).then(data => {
-    //     cookies.set('access_token', data.access_token, { path: '/' });
-    //   });
-    // }
+    console.log("refresh token:", cookies.get('refresh_token'));
+    
+    let timestamp = cookies.get('timestamp');
+    if (Math.floor(Date.now() / 1000 - timestamp) >= 3600 || timestamp === 'undefined') {
+      fetch(`/refresh-token/${cookies.get('refresh_token')}`).then(res => res.json()).then(data => {
+        cookies.set('access_token', data.access_token, { path: '/' });
+      });
+    }
     loginMessage = 'Logged In';
   }
   else {
     loginMessage = 'Login to Spotify';
   }
+  console.log("login mess:", loginMessage);
   
   const query = queryString.parse(props.location.search);
   const code = query['code'];
   console.log("0 (global): code: ", code);
   console.log("1. (global) isLoggedIn", isLoggedIn);
 
-  if (typeof code !== 'undefined' || !isLoggedIn) {
+  if (typeof code !== 'undefined' && !isLoggedIn) {
     LogIn();
   }
 
-  const [accessToken, setAccessToken] = useState('');
   function LogIn() {
     fetch(`/logged-in/${code}`).then(res => res.json()).then(data => {
       console.log("2 isLoggedIn:", isLoggedIn);
       console.log("3 Logged in entered", data);
       cookies.set('code', code, { path: '/' });
       cookies.set('access_token', data.access_token, { path: '/' });
+      cookies.set('refresh_token', data.refresh_token, { path: '/' });
       cookies.set('timestamp', Math.floor(Date.now() / 1000), { path: '/' });
       let isLoggedInCopy = (typeof cookies.get('access_token') !== 'undefined');
 
       console.log("4 checking if cookie is set isLoggedInCopy", isLoggedInCopy);
-      // store locally and in cookies here
       console.log("5 cookies access_token value: ", cookies.get('access_token'));
-      // after auth is set, redirect to the base url
-      setAccessToken(data.access_token);
     });
   }
   
