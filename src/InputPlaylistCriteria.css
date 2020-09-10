@@ -57,6 +57,12 @@
   cursor: pointer;
 }
 
+.Submit:hover {
+  cursor: pointer;
+  background-color: white;
+  color: #00c288;
+}
+
 .column .topnav {
   background-color: #00c24d;
   overflow: hidden;
@@ -117,4 +123,10 @@ p {
   margin-top: 10px;
   margin-right: 10px;
   cursor: pointer;
+}
+
+.column .topnav button:hover {
+  cursor: pointer;
+  background-color: white;
+  color: #00c24d;
 }

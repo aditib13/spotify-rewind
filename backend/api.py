@@ -206,6 +206,7 @@ def create_final_playlist(year, num, access_token, uris):
     print("create final playlist response:", response)
     return response
 
+@app.route('/refresh-token/<code>')
 def refresh_token(code):
     token_query = 'https://example.com/v1/refresh'
     request_body = {
@@ -216,7 +217,7 @@ def refresh_token(code):
     }
 
     response = requests.post(url=token_query, data=request_body, headers=headers).json()
-    return response['access_token'], response['refresh_token']
+    return {'access_token': response['access_token']}
 
 def get_user_id(access_token):
     print("1 in get user id function")

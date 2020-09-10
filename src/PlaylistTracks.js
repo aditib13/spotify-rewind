@@ -33,7 +33,7 @@ function PlaylistTracks(props) {
     })
 
     document.getElementById('trackList').innerHTML =
-      `<p> Top Tracks of ${year} </p> 
+      `<p> Top ${tracks.length} Tracks of ${year} </p> 
         <div id="box"> 
             <li>` + trackList.join(`</li><li>`) + `</li> 
         </div>`
