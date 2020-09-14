@@ -19,7 +19,7 @@
     "universal-cookie": "^4.0.3"
   },
   "scripts": {
-    "start": "node server.js",
+    "start": "react-scripts start",
     "start-api": "cd backend && venv/bin/flask run",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -40,18 +40,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:5000",
-  "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
-  "main": "server.js",
-  "devDependencies": {},
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/aditib13/spotify-rewind.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/aditib13/spotify-rewind/issues"
-  },
-  "homepage": "https://github.com/aditib13/spotify-rewind#readme"
+  "proxy": "http://localhost:5000"
 }

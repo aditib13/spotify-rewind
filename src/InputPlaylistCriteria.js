@@ -7,6 +7,7 @@ import queryString from 'query-string';
 import Cookies from 'universal-cookie';
 import './InputPlaylistCriteria.css';
 
+
 function InputPlaylistCriteria(props) {
   const cookies = new Cookies();
   let isLoggedIn = (typeof cookies.get('access_token') !== 'undefined');
@@ -113,7 +114,8 @@ function InputPlaylistCriteria(props) {
   }
 
   const login = (e) => {
-    let SPOTIFY_CLIENT_ID = 'd831937ac99d4ebba9b65e864fccd8c1'
+    let SPOTIFY_CLIENT_ID = process.env.REACT_APP_SPOTIFY_CLIENT_ID;
+    console.log("client id", SPOTIFY_CLIENT_ID);
     console.log("login entered")
     let authQuery = 'https://accounts.spotify.com/authorize'
     let authParams = {
