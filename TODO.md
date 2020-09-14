@@ -19,13 +19,6 @@
 - source venv/bin/activate
 - pip freeze > requirements.txt
 
-add to requirements somehow
-- yarn add react-select
-- npm install react-router-dom
-- npm install universal-cookie
-- npm install react-promise-tracker --save
-
-
 
 # bugs
 - setAccessToken re-renders the page and doesn't execute the code after it

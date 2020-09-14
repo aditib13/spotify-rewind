@@ -1,7 +1,7 @@
 import React, { useState} from 'react';
 import { useHistory} from 'react-router-dom';
 import Select from 'react-select';
-import Popup from "reactjs-popup";
+import Popup from 'react-popup';
 import { genreList } from './GenreList.js';
 import queryString from 'query-string';
 import Cookies from 'universal-cookie';
@@ -63,6 +63,7 @@ function InputPlaylistCriteria(props) {
     const currYear = new Date().getFullYear();
     // check for correct inputs
     if (genres.length <= 0 || num == '' || year == '') {
+      console.log("error!!!");
       alert(`Please fill in all fields.`);
       return -1;
     }
@@ -88,6 +89,10 @@ function InputPlaylistCriteria(props) {
     }
     if (isNaN(num)) {
       alert(`Please pick a valid number.`);
+      return -1;
+    }
+    if (genres.length > 5) {
+      alert(`Please limit your search to 5 or less genres.`);
       return -1;
     }
   }

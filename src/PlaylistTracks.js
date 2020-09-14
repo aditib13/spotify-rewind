@@ -11,11 +11,14 @@ function PlaylistTracks(props) {
   const accessToken = query.accessToken;
   console.log(year, num, genres, accessToken);
   let uris = [];
+  let tracksLoaded = false;
 
   function createPlaylist() {
     console.log("createPlaylist entered");
     fetch(`/create-playlist/${year}/${num}/${accessToken}/${uris}`).then(data => {
+        tracksLoaded = true;
         console.log("Playlist Created!");
+        alert('Playlist Created!');
     });
   }
 
