@@ -248,7 +248,7 @@ def get_access_token(code):
         request_body = {
             'grant_type': "authorization_code",
             'code': code,
-            'redirect_uri': "http://localhost:3000/logged-in"
+            'redirect_uri': "https://spotify-rewind-app.herokuapp.com/logged-in"
         }
         headers = {
             'Authorization': "Basic {}".format(encoded_data)

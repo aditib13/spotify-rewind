@@ -121,7 +121,7 @@ function InputPlaylistCriteria(props) {
     let authParams = {
       'client_id': SPOTIFY_CLIENT_ID,
       'response_type': 'code',
-      'redirect_uri': "http://localhost:3000/logged-in",
+      'redirect_uri': "https://spotify-rewind-app.herokuapp.com/logged-in",
       'scope': 'playlist-modify-public'
     }
     var urlArgs = Object.keys(authParams).map(key => key + '=' + authParams[key]).join('&');
