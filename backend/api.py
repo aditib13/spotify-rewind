@@ -12,7 +12,7 @@ from urllib.parse import quote
 
 if __name__ == '__main__':
     app.run()
-CORS(app)
+    CORS(app)
 
 # Spotify search auth info
 SPOTIFY_CLIENT_ID = config('SPOTIFY_CLIENT_ID')
