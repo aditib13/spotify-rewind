@@ -10,8 +10,8 @@ import pprint
 import math
 from urllib.parse import quote
 
-app = Flask(__name__)
-app.run(debug=True)
+if __name__ == '__main__':
+    app.run()
 CORS(app)
 
 # Spotify search auth info
